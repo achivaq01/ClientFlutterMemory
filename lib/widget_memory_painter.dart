@@ -21,8 +21,6 @@ class WidgetMemoryPainter extends CustomPainter {
   }
 
   void drawBoard(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.blueAccent;
-
     final int dimensions = appData.memoryBoard.length;
     double smallerDimension = size.width < size.height ? size.width : size.height;
     double cellDimension = (smallerDimension / dimensions) / 1.5;
@@ -34,6 +32,17 @@ class WidgetMemoryPainter extends CustomPainter {
 
     for (var i = 0; i < dimensions; i++) {
       for (var j = 0; j < dimensions; j++) {
+        Color paintColor;
+
+        if(appData.memoryBoard[i][j][0] == Colors.black) {
+          paintColor = Colors.black26;
+
+        } else {
+          paintColor = appData.memoryBoard[i][j][1];
+
+        }
+        final paint = Paint()..color = paintColor;
+
         Rect cellRect = Rect.fromLTWH(
             offsetX + i * (cellDimension + separationOffset),
             offsetY + j * (cellDimension + separationOffset),
@@ -43,9 +52,5 @@ class WidgetMemoryPainter extends CustomPainter {
       }
     }
   }
-
-
-
-
 
 }

@@ -61,7 +61,7 @@ class AppData with ChangeNotifier {
 
     _socketClient = IOWebSocketChannel.connect("ws://$ip:$port");
     _socketClient!.stream.listen(
-      (message) {
+          (message) {
         final data = jsonDecode(message);
 
         if (connectionStatus != ConnectionStatus.connected) {
@@ -93,7 +93,7 @@ class AppData with ChangeNotifier {
             break;
           case 'private':
             messages +=
-                "Private message from '${data['from']}': ${data['value']}\n";
+            "Private message from '${data['from']}': ${data['value']}\n";
             break;
           default:
             messages += "Message from '${data['from']}': ${data['value']}\n";
@@ -240,8 +240,54 @@ class AppData with ChangeNotifier {
     }
   }
 
-  List<List<List<String>>> memoryBoard =
-  List.generate(4, (i) => List.generate(4, (j) => List.generate(2, (k) => "-")));
+  // Brand new code
+
+  List<List<List<Color>>> memoryBoard =
+  List.generate(
+      4, (i) => List.generate(4, (j) => List.generate(2, (k) => Colors.black)));
+
+  bool areTheCellsSet = false;
+
+
+  void setUpCells() {
+    if(!areTheCellsSet) {
+      List<int> colorIndices = generateColors(8);
+      List<Color> colors = [
+        Colors.blueAccent,
+        Colors.green,
+        Colors.orange,
+        Colors.red,
+        Colors.deepPurple,
+        Colors.pinkAccent,
+        Colors.yellow,
+        Colors.brown
+      ];
+
+      int index = 0;
+      for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+          memoryBoard[i][j][1] = colors[colorIndices[index]];
+          index++;
+        }
+      }
+      areTheCellsSet = true;
+    }
+  }
+
+
+  List<int> generateColors(int numPairs) {
+    List<int> colors = [];
+    for (int i = 0; i < numPairs; i++) {
+      colors.addAll([i, i]);
+    }
+    colors.shuffle();
+    return colors;
+  }
+
+  void revealColor(int row, int col) {
+    memoryBoard[row][col][0] = Colors.white;
+  }
+
 
 
 
