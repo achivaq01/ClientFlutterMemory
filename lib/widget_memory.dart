@@ -12,11 +12,17 @@ class WidgetMemory extends StatefulWidget {
 }
 
 class WidgetMemoryState extends State<WidgetMemory> {
+  @override
+  void initState() {
+    super.initState();
+    AppData appData = Provider.of<AppData>(context, listen: false);
+    appData.setUpCells();
+
+  }
 
   @override
   Widget build(BuildContext context) {
     AppData appData = Provider.of<AppData>(context);
-    appData.setUpCells();
 
     return GestureDetector(
       onTapUp: (TapUpDetails details) {

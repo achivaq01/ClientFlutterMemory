@@ -67,14 +67,14 @@ class AppData with ChangeNotifier {
         if (connectionStatus != ConnectionStatus.connected) {
           connectionStatus = ConnectionStatus.connected;
         }
-
+        print(data);
         switch (data['type']) {
           case 'list':
             clients = (data['list'] as List).map((e) => e.toString()).toList();
             clients.remove(mySocketId);
             messages += "List of clients: ${data['list']}\n";
             break;
-          case 'id':
+          case 'greetings':
             mySocketId = data['value'];
             messages += "Id received: ${data['value']}\n";
             break;
@@ -246,34 +246,28 @@ class AppData with ChangeNotifier {
   List.generate(
       4, (i) => List.generate(4, (j) => List.generate(2, (k) => Colors.black)));
 
-  bool areTheCellsSet = false;
-
 
   void setUpCells() {
-    if(!areTheCellsSet) {
-      List<int> colorIndices = generateColors(8);
-      List<Color> colors = [
-        Colors.blueAccent,
-        Colors.green,
-        Colors.orange,
-        Colors.red,
-        Colors.deepPurple,
-        Colors.pinkAccent,
-        Colors.yellow,
-        Colors.brown
-      ];
+    List<int> colorIndices = generateColors(8);
+    List<Color> colors = [
+      Colors.blueAccent,
+      Colors.green,
+      Colors.orange,
+      Colors.red,
+      Colors.deepPurple,
+      Colors.pinkAccent,
+      Colors.yellow,
+      Colors.brown
+    ];
 
-      int index = 0;
-      for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-          memoryBoard[i][j][1] = colors[colorIndices[index]];
-          index++;
-        }
+    int index = 0;
+    for (int i = 0; i < 4; i++) {
+      for (int j = 0; j < 4; j++) {
+        memoryBoard[i][j][1] = colors[colorIndices[index]];
+        index++;
       }
-      areTheCellsSet = true;
     }
   }
-
 
   List<int> generateColors(int numPairs) {
     List<int> colors = [];

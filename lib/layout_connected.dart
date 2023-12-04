@@ -21,7 +21,7 @@ class _LayoutConnectedState extends State<LayoutConnected> {
         middle: const Text("Partida"),
         leading: CupertinoNavigationBarBackButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            appData.disconnectFromServer();
           },
         ),
       ),

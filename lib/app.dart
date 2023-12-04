@@ -22,10 +22,16 @@ class AppState extends State<App> {
 
     switch (appData.connectionStatus) {
       case ConnectionStatus.connected:
+        print("going to layout connected");
         return const LayoutConnected();
       case ConnectionStatus.connecting:
+        print("going to layout connecting");
         return const LayoutConnecting();
+      case ConnectionStatus.disconnected:
+        print("going to layout disconnected");
+        return const LayoutDisconnected();
       default:
+        print("going to layout disconnected");
         return const LayoutDisconnected();
     }
   }
